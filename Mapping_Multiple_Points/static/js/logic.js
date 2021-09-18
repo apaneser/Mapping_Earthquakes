@@ -24,4 +24,4 @@ cityData.forEach(function(city) {
         lineWeight: 4
     })
     .bindPopup("<h2>" + city.city + ", " + city.state + "</h2> <hr> <h3>Population " + city.population.toLocaleString() + "</h3>").addTo(map);
-});
+}); 

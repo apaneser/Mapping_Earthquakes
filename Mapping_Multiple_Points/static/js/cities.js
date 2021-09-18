@@ -27,4 +27,4 @@ const cities = [{
     city: "Pheonix",
     state: "AZ",
     population: 1660272
-}];
+}]; 
