@@ -29,74 +29,31 @@ let baseMaps = {
 
 // Create the map object with a center and zoom level
 let map = L.map('mapid', {
-    center: [30, 30],
+    center: [44.0,-88.0],
     zoom: 2,
-    layers: [streets]
+    layers: [light]
 })
 
 // pass our map layers into our layers control and add the layers control to the map
 L.control.layers(baseMaps).addTo(map);
 
 // accessing airport geoJSON URL
-let airportData = "https://raw.githubusercontent.com/apaneser/Mapping_Earthquakes/Mapping_GeoJSON_Points/Mapping_GeoJSON_Points/majorAirports.json";
+let torontoData = "https://raw.githubusercontent.com/apaneser/Mapping_Earthquakes/Mapping_GeoJSON_Linestrings/Mapping_GeoJSON%20Linestrings/torontoRoutes.json";
+
+// creating style for the lines
+let myStyle = {
+    color: "#ffffa1",
+    weight: 2
+}
 
 // Grabbing our geoJSON data
-d3.json(airportData).then(function(data){
+d3.json(torontoData).then(function(data){
     console.log(data);
     // creating a GeoJSON layer with the retrieved data
     L.geoJson(data, {
+        style: myStyle,
         onEachFeature(feature, layer){
-            layer.bindPopup("<h1>Airport Code: " + feature.properties.faa + "</h1><h2> Airport Name: " + feature.properties.name + "</h2><h3>City: " + feature.properties.city + ", " + feature.properties.country + "</h3>")
+            layer.bindPopup("<h1>Airline: " + feature.properties.airline + "</h1><h2> Destination: " + feature.properties.dst + "</h2>")
         }
     }).addTo(map);
 })
-
-
-
-
-
-
-// GeoJSON practice
-
-// // Add GeoJSON data
-// let sanFranAirport =
-// {
-//     "type":"FeatureCollection", "features":[{
-//         "type":"Feature",
-//         "properties":{
-//             "id":"3469",
-//             "name":"San Francisco International Airport",
-//             "city": "San Francisco",
-//             "country": "United States",
-//             "faa":"SFO",
-//             "icao": "KSFO",
-//             "alt":"13",
-//             "tz-offset":"-8",
-//             "dst":"A",
-//             "tz": "America/Los_Angeles"},
-//         "geometry":{
-//             "type": "Point",
-//             "coordinates":[-122.375,37.61899948120117]
-//         }
-//     }]
-// };
-
-// grabbing geoJSON data via pointToLayer
-// L.geoJSON(sanFranAirport, {
-//     // turn each feature into a marker on the map
-//     pointToLayer: function(feature, latlng){
-//         console.log(feature);
-//         return L.marker(latlng)
-//         .bindPopup("<h1>" + feature.properties.name + "</h1>" + "<h2>" + feature.properties.city + ", " + feature.properties.country + "</h2>");
-//     }
-// }).addTo(map);
-
-// //grabbing geoJSON data using onEachFeature
-// L.geoJSON(sanFranAirport, {
-//     onEachFeature: function(feature, layer){
-//         console.log(layer);
-//         layer.bindPopup("<h1>Airport Code: " + feature.properties.faa + "</h1><h2>Airport Name: " + feature.properties.name + "</h2>" );
-//     }
-// }).addTo(map);
-
-
